@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: second-service
+  zipkin:
+    locator:
+      discovery:
+        enabled: true
+    base-url: http://localhost:9411/
+server:
+  port: 8082
