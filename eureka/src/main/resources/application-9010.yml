@@ -1,0 +1,25 @@
+server:
+  port: 9010
+
+spring:
+  application:
+    name: eureka-server
+  security:
+    user:
+      name: eureka
+      password: eureka
+
+
+eureka:
+  server:
+    enable-self-preservation: false
+  client:
+    register-with-eureka: false
+    fetch-registry: true
+    registry-fetch-interval-seconds: 3
+    service-url:
+      defaultZone: http://eureka:eureka@ben450:9011/eureka
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+    hostname: ${spring.cloud.client.ip-address}

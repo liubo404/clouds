@@ -1,0 +1,24 @@
+# 1.server配置
+server:
+  port: 8082
+
+
+# 2.spring配置
+spring:
+  application:
+    name: second-service
+
+
+
+# 3.Eureka配置
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka:eureka@ben450:9010/eureka,http://eureka:eureka@ben450:9011/eureka
+    registry-fetch-interval-seconds: 3
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+    lease-renewal-interval-in-seconds: 3
+    lease-expiration-duration-in-seconds: 9
+    hostname: ${spring.cloud.client.ip-address}

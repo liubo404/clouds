@@ -1,20 +1,3 @@
-server:
-  port: 8080
-
 spring:
-  cloud:
-    gateway:
-      routes:
-        - id: employeeModule
-          uri: http://localhost:8081/
-          predicates:
-            - Path=/employee/**
-        - id: consumerModule
-          uri: http://localhost:8082/
-          predicates:
-            - Path=/consumer/**
-  zipkin:
-    base-url: http://localhost:9411/
-    locator:
-      discovery:
-        enabled: true
+  profiles:
+    active: dev
