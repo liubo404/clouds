@@ -4,6 +4,7 @@ import com.dingtalk.api.DefaultDingTalkClient;
 import com.dingtalk.api.request.OapiRobotSendRequest;
 import com.dingtalk.api.response.OapiRobotSendResponse;
 import org.apache.commons.codec.binary.Base64;
+import org.slf4j.Logger;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
@@ -14,6 +15,8 @@ import java.security.NoSuchAlgorithmException;
 
 public class DingTalk {
 
+
+    private static final Logger log = org.slf4j.LoggerFactory.getLogger(DingTalk.class);
     private DingConfig dingConfig;
 
     public DingTalk(DingConfig dingConfig) {
@@ -27,7 +30,7 @@ public class DingTalk {
             String sign = getSign(time);
             //这个是通过钉钉获取的机器人的连接，需要PC版才可以
             String url = String.format("%s&timestamp=%s&sign=%s", dingConfig.getHookUrl(), time, sign);
-//        DefaultDingTalkClient client = new DefaultDingTalkClient("https://oapi.dingtalk.com/robot/send?access_token=1e1e402813e3db2ad0a3a1ee7bd48171b7fec4778228ed8e476a02dac188d498&timestamp="+time+"&sign="+sign );
+            log.info("钉钉的url={}", url);
             DefaultDingTalkClient client = new DefaultDingTalkClient(url);
             OapiRobotSendRequest request = new OapiRobotSendRequest();
             request.setMsgtype("text");
@@ -36,12 +39,12 @@ public class DingTalk {
             request.setText(text);
 
             OapiRobotSendRequest.At at = new OapiRobotSendRequest.At();
-            at.setIsAtAll(true);//设置@所有的人
+            at.setIsAtAll(dingConfig.getIsAtAll());//设置@所有的人
             request.setAt(at);
             OapiRobotSendResponse response = client.execute(request);
-            System.out.println(response.getErrcode());
+            log.info("钉钉的结果 {}", response);
         } catch (Exception ex) {
-            System.out.println(ex);
+            log.error("钉钉发消息异常", ex);
         }
 
     }

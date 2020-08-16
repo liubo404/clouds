@@ -1,6 +1,7 @@
 package com.demo.controller;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.ParameterizedTypeReference;
@@ -12,6 +13,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.logging.Logger;
 
+@Slf4j
 @RestController
 @RequestMapping("/employee")
 public class FirstController {
@@ -33,6 +35,7 @@ public class FirstController {
 
     @GetMapping("/message")
     public String test() {
+        log.info("tst...");
         LOG.info("Inside zipkinService 1..");
 
         String response = (String) restTemplate.exchange("http://localhost:8082/consumer/message",
